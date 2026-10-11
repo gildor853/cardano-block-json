@@ -1,0 +1,84 @@
+{
+  "name": "cardano-block-json",
+  "version": "1.0.0",
+  "description": "Fetch any Cardano block from a relay over the node-to-node protocol and decode it into structured JSON: every era from Byron to Conway, transactions, certificates, governance, scripts, datums and metadata. Zero dependencies.",
+  "author": "Gildor",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gildor853/cardano-block-json.git"
+  },
+  "homepage": "https://github.com/gildor853/cardano-block-json#readme",
+  "bugs": {
+    "url": "https://github.com/gildor853/cardano-block-json/issues"
+  },
+  "keywords": [
+    "cardano",
+    "block",
+    "cbor",
+    "decoder",
+    "ouroboros",
+    "node-to-node",
+    "blockfetch",
+    "relay",
+    "json",
+    "conway",
+    "governance",
+    "cli"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "cardano-block-json": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "DISCLAIMER.md",
+    "SECURITY.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "prepare": "npm run build",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "smoke": "node scripts/smoke.mjs && node scripts/smoke.cjs",
+    "check:readme": "node scripts/check-readme.mjs",
+    "prepublishOnly": "npm run typecheck && npm run test:coverage && npm run build && npm run smoke && npm run check:readme && npm run check:legal",
+    "check:legal": "node scripts/check-legal.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^5.0.3",
+    "tsup": "^8.5.1",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.3"
+  },
+  "overrides": {
+    "esbuild": "^0.28.2"
+  }
+}

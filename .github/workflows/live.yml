@@ -1,0 +1,28 @@
+name: Live relays
+
+# Manual only: fetches known blocks from public mainnet, preprod and preview
+# relays over the node-to-node protocol and compares them with test fixtures.
+# Public relays can be slow or refuse connections, so this is not part of CI.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    name: Live relays
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx vitest run test/live.test.ts
+        env:
+          CARDANO_LIVE: "1"
