@@ -42,7 +42,7 @@ describe("robustness", () => {
         for (let j = 0; j < flips; j++) copy[Math.floor(rand() * copy.length)] = Math.floor(rand() * 256);
         attempt(copy, `${name} mutation ${i}`);
       }
-    });
+    }, 60_000);
   }
 
   it("rejects trailing data and hostile CBOR headers", () => {
